@@ -1,0 +1,11 @@
+@use "_my-fream.scss";
+.a{
+    //@include widh-in-media(12,12, 12 , 6, 4, 4);
+    background-color: red; 
+}
+.b{
+    background-color: rgb(55, 0, 255);
+}
+
+
+

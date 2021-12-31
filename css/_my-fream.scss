@@ -1,0 +1,214 @@
+$left :right;
+$right:left;
+$media:(
+    "xs": "10px",
+    "sm": "578px",
+    "md":"768px",
+    "lg":"992px",
+    "xl":"1200px",
+    "xxl":"1400px",
+);
+@mixin circle($px) {
+    width: $px;
+    height: $px;
+    border-radius:50%;
+    
+};
+@mixin overlay($coler) {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background-color: rgba($coler,0.1);
+};
+
+@mixin prefiexs($prop,$value) {
+    #{"-webkit-"+$prop} : $value;
+    #{"-moz-"+$prop} : $value;
+    #{"-o-"+$prop} : $value;
+    #{"-ms-"+$prop} : $value;
+    #{$prop} : $value ;
+};
+*{
+    @include prefiexs(box-sizing,border-box)
+}
+.centring{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@for $i from 1 to 12 {
+    %col-#{$i}{
+    width: (100% /(12/$i));
+    float: $left;
+    }
+};
+@mixin make-container ($y) {
+    .container{
+        width :$y;
+    }
+
+};
+.container{
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: brown;
+}
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) { 
+    body .container{
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+    @include make-container(100%);
+}
+
+@media (min-width: 577px) { @include make-container(540px)}
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { @include make-container(720px)}
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {@include make-container(960px) }
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { @include make-container(1140px) }
+@media (min-width: 1400px) { @include make-container(1320px) }
+
+@mixin widh-in-media($a,$b,$c,$d,$f,$g) {
+
+    @media (max-width: 576px) {width: (100%/(12/$a)); } 
+    @media (min-width: 577px) {width: (100%/(12/$b)); }
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {width: (100%/(12/$c));}
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {width: (100%/(12/$d)) }
+    // Extra large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) { width: (100%/(12/$f)); }
+    @media (min-width: 1400px) { width: (100%/(12/$g)); }
+
+}
+
+
+@each $name , $value in $media {
+    @for $i from 1 to 13 {
+    #{".col-"+$name+"-"+$i}
+    {
+        @media (min-width:$value){
+           width: (100%/(12/$i));
+           float: $left;
+            }
+        }
+    }
+}
+@for $i from 1 to 13 {
+    #{".col-"+$i}{
+        width: (100%/(12/$i));
+        float: $left;
+    }
+}
+@each $name , $value in $media {
+    @for $i from 1 to 13 {
+    #{".w-"+$name+"-"+$i}
+    {
+        @media (min-width:$value){
+           width: (100%/(12/$i));
+            }
+        }
+    }
+}
+@for $i from 1 to 13 {
+    #{".w-"+$i}{
+        width: (100%/(12/$i));
+    }
+}
+//ofeset
+@each $name , $value in $media {
+    @for $i from 1 to 13 {
+    #{".col-"+$name+"-offset-"+$i}
+    {
+        @media (min-width:$value){
+           #{"margin-"+$left}: (100%/(12/$i));
+            }
+        }
+    }
+}
+//hiideen
+
+
+//visebel 
+@each $name , $value in $media {
+    @for $i from 1 to 13 {
+    #{".visebel-"+$name}
+    {
+        display: none;
+        @media (min-width:$value){
+           display: block;
+            }
+        }
+    }
+}
+//puch 
+@each $name , $value in $media {
+    @for $i from 0 to 13 {
+        @if($i == 0){
+            #{".col-"+$name+"-"+$i}
+            {
+                @media (min-width:$value){
+                    position: static;
+                    }
+                }
+        }
+        @if($i > 0) {
+            #{".col-"+$name+"-puch-"+$i}
+            {
+                @media (min-width:$value){
+                    position: relative;
+                    #{$left}:(100%/(12/$i));
+                    }
+                }
+        }
+
+    }
+}
+//pull
+@each $name , $value in $media {
+    @for $i from 0 to 13 {
+        @if($i==0){
+            #{".col-"+$name+"-"+$i}
+            {
+                @media (min-width:$value){
+                    position: static;
+                    }
+                }
+        }@else {
+            #{".col-"+$name+"-pull-"+$i}
+            {
+                @media (min-width:$value){
+                   position: relative;
+                   #{$left}:-(100%/(12/$i));
+                    }
+                }
+        }
+
+    }
+}
+img{
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.center-block{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+//center in media 
+@each $name , $value in $media {
+    #{".center-"+$name}{
+        @media (min-width:$value ){
+        margin-left: auto;
+        margin-right: auto;
+            }
+        }
+}
